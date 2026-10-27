@@ -90,6 +90,18 @@
     grid.addEventListener("click", function (e) { var b = e.target.closest(".kw-tile"); if (b) open(+b.dataset.no); });
 
     var modal = $("#kw-modal"), sheet = $(".sheet", modal), cur = 0;
+    // 휴대폰에서 긴 문단은 문장 경계(…다.)에서 나눠 읽기 쉽게 한다 (전기연 요청 2026-10-26)
+    var narrow = window.matchMedia("(max-width: 640px)");
+    function split(text) {
+      if (!narrow.matches || text.length < 220) return [text];
+      var sents = text.match(/[^.]+?다\.\s*|[^.]+$/g) || [text], out = [], buf = "";
+      sents.forEach(function (x) {
+        if (buf && (buf + x).length > 170) { out.push(buf.trim()); buf = ""; }
+        buf += x;
+      });
+      if (buf.trim()) out.push(buf.trim());
+      return out;
+    }
     function open(no) {
       var k = K[no - 1]; if (!k) return;
       cur = no;
@@ -98,7 +110,7 @@
       $("#kw-title").textContent = k.title;
       $(".photo-cap", modal).textContent = k.tempImage ? "※ 사진은 임시 이미지입니다." : "사진 · " + k.caption;
       $(".sheet-bd", modal).innerHTML = k.body.length ? k.body.map(function (b) {
-        return typeof b === "string" ? "<p>" + esc(b) + "</p>" : '<figure><img src="' + esc(b.img) + '" alt="' + esc(b.cap) + '" loading="lazy"><figcaption>' + esc(b.cap) + "</figcaption></figure>";
+        return typeof b === "string" ? split(b).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") : '<figure><img src="' + esc(b.img) + '" alt="' + esc(b.cap) + '" loading="lazy"><figcaption>' + esc(b.cap) + "</figcaption></figure>";
       }).join("") : '<div class="pending"><strong>원고 준비 중입니다</strong>이 키워드의 이야기는 역사서 원고가 정리되는 대로 공개됩니다.</div>';
       var p = K[no - 2], nx = K[no];
       var pb = $(".sheet-nav .prev", modal), nb = $(".sheet-nav .next", modal);
