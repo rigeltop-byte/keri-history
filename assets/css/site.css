@@ -38,15 +38,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ───────── 공통 헤더 ───────── */
 .hd { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .hd .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 76px; }
-.gnb { margin-left: auto; }
-.logo { display: flex; align-items: center; gap: 12px; flex: none; }
+.gnb { margin-left: auto; margin-right: 12px; }
+.logo { display: flex; align-items: center; gap: 12px; flex: none; transform: translateY(-4px); } /* 엠블럼 아래 KERI 글자 때문에 생기는 시각적 처짐 보정: 로고 글자를 메뉴 글자 높이에 맞춤 */
 .logo img { height: 34px; width: auto; }
-.logo .t { font-size: 15px; font-weight: 700; letter-spacing: -.03em; color: var(--ink-2); padding-left: 12px; border-left: 1px solid var(--line); line-height: 1; }
+.logo .t { transform: translateY(4px); font-size: 15px; font-weight: 700; letter-spacing: -.03em; color: var(--ink-2); padding-left: 12px; border-left: 1px solid var(--line); line-height: 1; }
 .home-btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 18px; border-radius: 10px 10px 10px 2px; color: #fff; font-size: 14px; font-weight: 700; letter-spacing: -.02em; white-space: nowrap;
   background: linear-gradient(135deg, #1b8be0 0%, #006bad 55%, #00508a 100%); box-shadow: 0 6px 16px -8px rgba(0,80,140,.7); }
 .home-btn:hover { filter: brightness(1.08); }
-.gnb ul { display: flex; gap: 36px; list-style: none; margin: 0; padding: 0; }
-.gnb a { position: relative; display: block; padding: 26px 0; font-size: 16px; font-weight: 600; letter-spacing: -.03em; color: var(--ink-2); }
+.gnb ul { display: flex; align-items: center; gap: 44px; list-style: none; margin: 0; padding: 0; }
+.gnb a { position: relative; display: block; padding: 22px 0; font-size: 16px; line-height: 32px; white-space: nowrap; font-weight: 600; letter-spacing: -.03em; color: var(--ink-2); }
 .gnb a:hover { color: var(--blue); }
 .gnb a[aria-current="page"] { color: var(--blue); }
 .gnb a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--blue); }
@@ -235,7 +235,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ───────── 반응형 ───────── */
 @media (max-width: 1180px) {
-  .gnb ul { gap: 22px; } .gnb a { font-size: 15px; }
+  .gnb ul { gap: 26px; } .gnb a { font-size: 15px; }
   .kw-grid { grid-template-columns: repeat(4, 1fr); }
   .books { grid-template-columns: repeat(2, 1fr); }
   .feature-book { grid-template-columns: 260px minmax(0, 1fr); gap: 40px; }
