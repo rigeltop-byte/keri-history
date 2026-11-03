@@ -90,11 +90,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
   transition: flex .6s cubic-bezier(.2,.8,.2,1); border-right: 1px solid rgba(255,255,255,.12); }
 .panel:last-child { border-right: 0; }
 /* 사진은 원본 색 그대로 (전기연 요청 2026-11-03: 푸른 반투명 레이어 제거). 글자 가독성을 위한 최소한의 검정 그라데이션만 둔다 */
-.panel::before { content: ""; position: absolute; inset: 0; background: var(--img) var(--pos, center) / cover no-repeat; transform: scale(1.04); transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.panel .bg { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform .8s cubic-bezier(.2,.8,.2,1); }
 .panel::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 50%, rgba(0,0,0,.32), rgba(0,0,0,0) 70%), linear-gradient(180deg, rgba(0,0,0,.06) 0%, rgba(0,0,0,.6) 100%); transition: opacity .5s; }
 .panel .no, .panel strong, .panel small { text-shadow: 0 2px 14px rgba(0,0,0,.55); }
 /* 01 인사말: 사진 대신 엠블럼 + 슬로건 (전기연 예시) */
-.panel.p-brand::before { background: linear-gradient(160deg, #0d2f66 0%, #071d44 55%, #04122c 100%); transform: none; }
+.panel.p-brand { background: linear-gradient(160deg, #0d2f66 0%, #071d44 55%, #04122c 100%); }
 .panel.p-brand::after { display: none; }
 .panel .brand-k { position: absolute; top: 22px; left: 22px; text-align: left; font-family: var(--font-en); font-size: 12px; line-height: 1.45; font-weight: 600; letter-spacing: .02em; color: rgba(255,255,255,.85); }
 .panel .brand-em { position: absolute; top: 11%; left: 50%; translate: -50% 0; width: min(52%, 170px); height: auto; }
@@ -108,7 +108,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .panel .arrow { position: absolute; top: 18px; right: 18px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--navy-900); display: grid; place-items: center; }
 .panel .arrow svg { width: 13px; height: 13px; }
 .panel:hover, .panel:focus-visible { flex: 1.6; }
-.panel:hover::before, .panel:focus-visible::before { transform: scale(1); }
+.panel:hover .bg, .panel:focus-visible .bg { transform: scale(1); }
 .panel:hover::after, .panel:focus-visible::after { opacity: .55; }
 .panel:hover .line { width: 70px; background: var(--orange); }
 .panel:hover .go, .panel:focus-visible .go { background: #fff; color: var(--navy-900); }
