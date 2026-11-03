@@ -97,7 +97,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .panel.p-brand::before { background: linear-gradient(160deg, #0d2f66 0%, #071d44 55%, #04122c 100%); transform: none; }
 .panel.p-brand::after { display: none; }
 .panel .brand-k { position: absolute; top: 22px; left: 22px; text-align: left; font-family: var(--font-en); font-size: 12px; line-height: 1.45; font-weight: 600; letter-spacing: .02em; color: rgba(255,255,255,.85); }
-.panel .brand-em { position: absolute; top: 15%; left: 50%; translate: -50% 0; width: min(58%, 200px); height: auto; }
+.panel .brand-em { position: absolute; top: 11%; left: 50%; translate: -50% 0; width: min(52%, 170px); height: auto; }
 .panel .brand-sl { position: absolute; bottom: 8%; left: 50%; translate: -50% 0; width: min(76%, 260px); height: auto; }
 .panel > * { position: relative; z-index: 1; }
 .panel .no { font-size: 15px; font-weight: 700; color: var(--orange); letter-spacing: .08em; }
@@ -282,6 +282,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .feature-book img { max-width: 360px; }
 }
 @media (max-width: 640px) {
+  /* 휴대폰 본문: 단어 단위 줄바꿈(keep-all) 대신 글자 단위로 이어 쓴다 — 긴 낱말이 통째로 넘어가 오른쪽이 비는 문제 (전기연 2차 요청 2026-11-03) */
+  .letter, .sheet-bd { word-break: normal; overflow-wrap: anywhere; }
+  .hero-k .dot { display: none; }
+  .hero-k .since { display: block; margin-top: 4px; }
   .menu li a { grid-template-columns: 44px 1fr; }
   .menu li a span { grid-column: 2; }
   .banner .wrap { padding-top: 44px; padding-bottom: 40px; }

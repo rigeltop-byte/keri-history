@@ -96,7 +96,8 @@
     var narrow = window.matchMedia("(max-width: 640px)");
     function split(text) {
       if (!narrow.matches || text.length < 220) return [text];
-      var sents = text.match(/[^.]+?다\.\s*|[^.]+$/g) || [text], out = [], buf = "";
+      // "다." 뒤에 공백/끝이 올 때만 문장 경계로 본다 (2,258.86 같은 소수점에서 끊기던 문제 — 전기연 2차 요청 2026-11-03)
+      var sents = text.match(/.*?다\.(?=\s|$)\s*|.+$/g) || [text], out = [], buf = "";
       sents.forEach(function (x) {
         if (buf && (buf + x).length > 170) { out.push(buf.trim()); buf = ""; }
         buf += x;
