@@ -5,6 +5,9 @@
 window.KERI_KEYWORDS = (function () {
   var D = {
     "open": 10,
+    "cover": {
+      "2": 2
+    },
     "titles": [
       "전기산업 발전을 위한 업계의 요구",
       "한국전기기기시험연구소의 탄생",
@@ -228,8 +231,8 @@ window.KERI_KEYWORDS = (function () {
     }
   };
   return D.titles.map(function (t, i) {
-    var no = i + 1, body = D.bodies[no] || [], first = null;
-    body.forEach(function (b) { if (!first && b && b.img) first = b; });
+    var no = i + 1, body = D.bodies[no] || [], imgs = body.filter(function (b) { return b && b.img; });
+    var first = imgs[(D.cover[no] || 1) - 1] || imgs[0] || null;
     return { no: no, title: t, open: no <= D.open, image: first ? first.img : "", caption: first ? first.cap : "", body: body };
   });
 })();
