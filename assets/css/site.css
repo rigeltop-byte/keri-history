@@ -89,8 +89,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .panel { position: relative; flex: 1; overflow: hidden; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px;
   transition: flex .6s cubic-bezier(.2,.8,.2,1); border-right: 1px solid rgba(255,255,255,.12); }
 .panel:last-child { border-right: 0; }
-.panel::before { content: ""; position: absolute; inset: 0; background: var(--img) center / cover no-repeat; transform: scale(1.04); transition: transform .8s cubic-bezier(.2,.8,.2,1), filter .5s; filter: grayscale(.35); }
-.panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,72,128,.5) 0%, rgba(5,21,48,.82) 100%); transition: opacity .5s; }
+/* 사진은 원본 색 그대로 (전기연 요청 2026-11-03: 푸른 반투명 레이어 제거). 글자 가독성을 위한 최소한의 검정 그라데이션만 둔다 */
+.panel::before { content: ""; position: absolute; inset: 0; background: var(--img) var(--pos, center) / cover no-repeat; transform: scale(1.04); transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.panel::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 50%, rgba(0,0,0,.32), rgba(0,0,0,0) 70%), linear-gradient(180deg, rgba(0,0,0,.06) 0%, rgba(0,0,0,.6) 100%); transition: opacity .5s; }
+.panel .no, .panel strong, .panel small { text-shadow: 0 2px 14px rgba(0,0,0,.55); }
+/* 01 인사말: 사진 대신 엠블럼 + 슬로건 (전기연 예시) */
+.panel.p-brand::before { background: linear-gradient(160deg, #0d2f66 0%, #071d44 55%, #04122c 100%); transform: none; }
+.panel.p-brand::after { display: none; }
+.panel .brand-k { position: absolute; top: 22px; left: 22px; text-align: left; font-family: var(--font-en); font-size: 12px; line-height: 1.45; font-weight: 600; letter-spacing: .02em; color: rgba(255,255,255,.85); }
+.panel .brand-em { position: absolute; top: 15%; left: 50%; translate: -50% 0; width: min(58%, 200px); height: auto; }
+.panel .brand-sl { position: absolute; bottom: 8%; left: 50%; translate: -50% 0; width: min(76%, 260px); height: auto; }
 .panel > * { position: relative; z-index: 1; }
 .panel .no { font-size: 15px; font-weight: 700; color: var(--orange); letter-spacing: .08em; }
 .panel strong { margin-top: 10px; font-size: clamp(20px, 1.75vw, 28px); font-weight: 800; letter-spacing: -.04em; line-height: 1.3; }
@@ -100,7 +108,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .panel .arrow { position: absolute; top: 18px; right: 18px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--navy-900); display: grid; place-items: center; }
 .panel .arrow svg { width: 13px; height: 13px; }
 .panel:hover, .panel:focus-visible { flex: 1.6; }
-.panel:hover::before, .panel:focus-visible::before { transform: scale(1); filter: none; }
+.panel:hover::before, .panel:focus-visible::before { transform: scale(1); }
 .panel:hover::after, .panel:focus-visible::after { opacity: .55; }
 .panel:hover .line { width: 70px; background: var(--orange); }
 .panel:hover .go, .panel:focus-visible .go { background: #fff; color: var(--navy-900); }
@@ -163,6 +171,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .kw-tile:hover img, .kw-tile:focus-visible img { transform: scale(1.08); filter: none; }
 .kw-tile:hover::after, .kw-tile:focus-visible::after { background: linear-gradient(180deg, rgba(0,107,173,.35) 0%, rgba(0,50,100,.9) 100%); }
 .kw-tile:focus-visible { outline-offset: -4px; }
+/* 미오픈 키워드: 사진 없이 번호 + "오픈 예정" (전기연 요청 2026-11-03) */
+.kw-tile.soon { background: #eef1f5; color: var(--ink-3); cursor: default; }
+.kw-tile.soon::after { display: none; }
+.kw-tile.soon .cap { bottom: auto; top: 50%; translate: 0 -50%; }
+.kw-tile.soon .num { color: #b3bbc6; }
+.kw-tile.soon .ttl { font-weight: 600; color: var(--ink-3); }
+.kw-phases { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: -24px 0 26px; padding: 0; list-style: none; }
+.kw-phases li { font-size: 13px; font-weight: 600; color: var(--ink-3); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+.kw-phases li.on { color: #fff; background: var(--blue); border-color: var(--blue); }
 .empty { text-align: center; padding: 70px 0; color: var(--ink-3); }
 
 .modal { position: fixed; inset: 0; z-index: 120; display: none; }
@@ -183,6 +200,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .sheet-bd figure { margin: 34px auto; max-width: 760px; }
 .sheet-bd figure img { width: 100%; border-radius: 10px; }
 .sheet-bd figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-3); text-align: center; }
+.sheet-bd h3 { margin: 1.6em 0 .7em; padding-left: 14px; border-left: 4px solid var(--orange); font-size: 21px; font-weight: 800; letter-spacing: -.04em; line-height: 1.4; color: var(--navy-900); }
+.sheet-bd blockquote { margin: 1.4em 0; padding: 22px 28px; border-radius: 14px; background: #f4f7fb; font-size: 17px; line-height: 1.8; color: var(--navy-900); }
+.sheet-bd blockquote p { margin: 0; text-indent: 0; text-align: left; }
+.sheet-bd blockquote cite { display: block; margin-top: 10px; font-style: normal; font-size: 14px; color: var(--ink-3); }
 .pending { text-align: center; padding: 30px 0 20px; color: var(--ink-3); }
 .pending strong { display: block; font-size: 20px; color: var(--ink); margin-bottom: 8px; letter-spacing: -.03em; }
 .sheet-nav { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); margin: 10px 56px 50px; }
@@ -197,13 +218,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ───────── 역사서 ───────── */
 .feature-book { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 60px; align-items: center; padding: 48px; border-radius: 28px; background: linear-gradient(135deg, #0a2148 0%, #051530 100%); color: #fff; margin-bottom: 70px; overflow: hidden; position: relative; }
-.feature-book img { width: 100%; height: auto; aspect-ratio: 1232 / 1080; object-fit: cover; background: #fff; border-radius: 16px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+.feature-book img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; background: #fff; border-radius: 16px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
 .feature-book .k { font-family: var(--font-en); font-size: 13px; font-weight: 700; letter-spacing: .16em; color: var(--orange); }
 .feature-book h2 { margin: 12px 0 0; font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -.05em; line-height: 1.3; }
 .feature-book p { margin: 16px 0 0; color: rgba(255,255,255,.75); line-height: 1.8; }
-.feature-book .chips { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
-.feature-book .chips span { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; padding: 9px 16px; font-size: 14px; font-weight: 600; }
-.feature-book .chips span::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
 .books { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; list-style: none; margin: 0; padding: 0; }
 .book { border: 1px solid var(--line); border-radius: 20px; padding: 26px 22px 22px; text-align: center; transition: box-shadow .3s, transform .3s; background: #fff; }
 .book:hover { box-shadow: 0 24px 50px -24px rgba(10,33,72,.35); transform: translateY(-4px); }
@@ -249,6 +267,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .panel { flex: none; min-height: 150px; padding: 28px 20px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
   .panel .line { margin: 12px 0 8px; } .panel .go { margin-top: 14px; padding: 7px 16px; font-size: 13px; }
   .panel:hover { flex: none; }
+  .panel .brand-k, .panel .brand-sl { display: none; }
+  .panel .brand-em { top: 50%; left: auto; right: 22px; translate: 0 -50%; width: 92px; opacity: .9; }
   .letter { font-size: 16.5px; margin-top: 36px; } .letter .hello { font-size: 19px; }
   .greet-photo { margin-top: 30px; border-radius: 16px; }
   .hd .wrap { height: 64px; }

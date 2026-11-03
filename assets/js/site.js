@@ -72,15 +72,17 @@
   var grid = $("#kw-grid");
   if (grid && window.KERI_KEYWORDS) {
     var K = window.KERI_KEYWORDS;
+    var OPEN = K.filter(function (k) { return k.open; }).length;
+    // 오픈된 키워드만 사진·제목·검색 대상. 나머지는 번호 + "오픈 예정" (전기연 요청 2026-11-03)
     function render(q) {
       var list = K.filter(function (k) {
-        return !q || (k.title + " " + k.body.filter(function (b) { return typeof b === "string"; }).join(" ")).toLowerCase().indexOf(q.toLowerCase()) > -1 || pad(k.no) === q;
+        return !q || pad(k.no) === q || (k.open && (k.title + " " + k.body.filter(function (b) { return typeof b === "string"; }).join(" ")).toLowerCase().indexOf(q.toLowerCase()) > -1);
       });
-      $("#kw-count").innerHTML = "<b>" + list.length + "</b>개 키워드";
+      $("#kw-count").innerHTML = q ? "<b>" + list.length + "</b>개 키워드" : "<b>" + OPEN + "</b>개 오픈 · 전체 " + K.length + "개 키워드";
       grid.innerHTML = list.map(function (k) {
+        if (!k.open) return '<li><div class="kw-tile soon" aria-label="' + pad(k.no) + '번 키워드 오픈 예정"><span class="cap"><span class="num">' + pad(k.no) + '</span><span class="ttl">오픈 예정</span></span></div></li>';
         return '<li><button class="kw-tile" type="button" data-no="' + k.no + '">' +
           '<img src="' + esc(k.image) + '" alt="" loading="lazy">' +
-          (k.body.length ? "" : '<span class="flag">원고 준비 중</span>') +
           '<span class="cap"><span class="num">' + pad(k.no) + '</span><span class="ttl">' + esc(k.title) + "</span></span></button></li>";
       }).join("");
       $("#kw-empty").hidden = list.length > 0;
@@ -103,16 +105,19 @@
       return out;
     }
     function open(no) {
-      var k = K[no - 1]; if (!k) return;
+      var k = K[no - 1]; if (!k || !k.open) return;
       cur = no;
       $(".sheet-hd", modal).style.backgroundImage = "url(" + k.image + ")";
       $(".pill", modal).textContent = "KEYWORD " + pad(no);
       $("#kw-title").textContent = k.title;
-      $(".photo-cap", modal).textContent = k.tempImage ? "※ 사진은 임시 이미지입니다." : "사진 · " + k.caption;
-      $(".sheet-bd", modal).innerHTML = k.body.length ? k.body.map(function (b) {
-        return typeof b === "string" ? split(b).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") : '<figure><img src="' + esc(b.img) + '" alt="' + esc(b.cap) + '" loading="lazy"><figcaption>' + esc(b.cap) + "</figcaption></figure>";
-      }).join("") : '<div class="pending"><strong>원고 준비 중입니다</strong>이 키워드의 이야기는 역사서 원고가 정리되는 대로 공개됩니다.</div>';
-      var p = K[no - 2], nx = K[no];
+      $(".photo-cap", modal).textContent = k.caption ? "사진 · " + k.caption : "";
+      $(".sheet-bd", modal).innerHTML = k.body.map(function (b) {
+        if (typeof b === "string") return split(b).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
+        if (b.h) return "<h3>" + esc(b.h) + "</h3>";
+        if (b.q) return "<blockquote><p>“" + esc(b.q) + "”</p><cite>" + esc(b.by) + "</cite></blockquote>";
+        return '<figure><img src="' + esc(b.img) + '" alt="' + esc(b.cap) + '" loading="lazy"><figcaption>' + esc(b.cap) + "</figcaption></figure>";
+      }).join("");
+      var p = K[no - 2], nx = K[no] && K[no].open ? K[no] : null;
       var pb = $(".sheet-nav .prev", modal), nb = $(".sheet-nav .next", modal);
       pb.disabled = !p; nb.disabled = !nx;
       if (p) $("strong", pb).textContent = pad(p.no) + " " + p.title;
@@ -137,7 +142,7 @@
       if (!modal.classList.contains("open")) return;
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft" && cur > 1) open(cur - 1);
-      if (e.key === "ArrowRight" && cur < K.length) open(cur + 1);
+      if (e.key === "ArrowRight" && cur < OPEN) open(cur + 1);
       if (e.key === "Tab") {
         var f = $$("button:not([disabled])", sheet), first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
