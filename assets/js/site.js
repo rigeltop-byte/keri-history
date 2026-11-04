@@ -180,7 +180,8 @@
         }).join("");
       } else {
         $("#v-plays").innerHTML = "";
-        $("#v-soon-title").textContent = (CAT[cat] || "") + " 영상은 준비 중입니다";
+        var nm = CAT[cat] || "";  // "대국민 축하영상"처럼 이름이 '영상'으로 끝나면 "영상은", 아니면 "행사스케치 영상은"
+        $("#v-soon-title").textContent = nm + (/영상$/.test(nm) ? "은" : " 영상은") + " 준비 중입니다";
       }
     }
     function openV(v) {
