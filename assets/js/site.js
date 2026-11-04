@@ -154,33 +154,44 @@
     if (m) open(+m[1]);
   }
 
-  /* ── 영상: 탭으로 분류, 카드 누르면 위 플레이어에서 재생 (목록은 assets/js/videos.js) ── */
+  /* ── 영상: 탭으로 분류, 카드 3칸(빈 칸은 "영상 준비 중"), 카드 누르면 팝업 재생 (목록은 assets/js/videos.js, 화면 구성은 전기연 1104 요청) ── */
   var vlist = $("#v-list");
   if (vlist && window.KERI_VIDEOS) {
-    var V = window.KERI_VIDEOS, CAT = { anniv: "50주년 기념영상", congrats: "대국민 축하영상", sketch: "50주년 행사스케치" }, vcur = "";
-    function play(v, auto) {
-      vcur = v.id;
-      $("#v-frame").src = "https://www.youtube-nocookie.com/embed/" + v.id + "?rel=0" + (auto ? "&autoplay=1" : "");
-      $("#v-cat").textContent = CAT[v.cat] || "";
-      $("#v-title").textContent = v.title;
-      $$(".vcard", vlist).forEach(function (c) { c.classList.toggle("on", c.dataset.id === v.id); });
-    }
+    var V = window.KERI_VIDEOS, CAT = { anniv: "50주년 기념영상", congrats: "대국민 축하영상", sketch: "50주년 행사스케치" };
+    var vmodal = $("#v-modal"), vlast = null;
     function renderV(cat) {
       var list = V.filter(function (v) { return !cat || v.cat === cat; });
-      $("#v-player").hidden = !list.length;
       $("#v-soon").hidden = !!list.length;
-      if (!list.length) $("#v-soon-title").textContent = (CAT[cat] || "영상") + "은 준비 중입니다";
-      vlist.innerHTML = list.map(function (v) {
+      if (!list.length) $("#v-soon").textContent = (CAT[cat] || "") + " 영상은 준비 중입니다";
+      var html = list.map(function (v) {
         return '<li><button class="vcard" type="button" data-id="' + v.id + '"><span class="thumb"><img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy"></span>' +
           '<span class="k">' + (CAT[v.cat] || "") + '</span><strong>' + esc(v.title) + "</strong><small>" + esc(v.date || "") + "</small></button></li>";
-      }).join("");
-      if (list.length) play(list.filter(function (v) { return v.id === vcur; })[0] || list[0], false);
+      });
+      while (html.length < 3 || html.length % 3) html.push('<li class="empty">영상 준비 중</li>');
+      vlist.innerHTML = html.join("");
+    }
+    function openV(v) {
+      $("#v-frame").src = "https://www.youtube-nocookie.com/embed/" + v.id + "?rel=0&autoplay=1";
+      $("#v-cat").textContent = CAT[v.cat] || "";
+      $("#v-title").textContent = v.title;
+      vmodal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      $(".sheet-x", vmodal).focus();
+    }
+    function closeV() {
+      vmodal.classList.remove("open");
+      $("#v-frame").src = "";
+      document.body.style.overflow = "";
+      if (vlast) vlast.focus();
     }
     vlist.addEventListener("click", function (e) {
       var b = e.target.closest(".vcard"); if (!b) return;
-      play(V.filter(function (v) { return v.id === b.dataset.id; })[0], true);
-      $("#v-player").scrollIntoView({ behavior: "smooth", block: "start" });
+      vlast = b;
+      openV(V.filter(function (v) { return v.id === b.dataset.id; })[0]);
     });
+    $(".sheet-x", vmodal).addEventListener("click", closeV);
+    $(".dim", vmodal).addEventListener("click", closeV);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && vmodal.classList.contains("open")) closeV(); });
     $("#v-tabs").addEventListener("click", function (e) {
       var b = e.target.closest("[role='tab']"); if (!b) return;
       $$("[role='tab']", $("#v-tabs")).forEach(function (t) { t.setAttribute("aria-selected", t === b); });

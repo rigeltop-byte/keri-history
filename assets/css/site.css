@@ -248,27 +248,25 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .soon-panel p { margin: 16px 0 0; color: rgba(255,255,255,.75); line-height: 1.85; }
 .soon-panel .btn { align-self: flex-start; margin-top: 30px; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 24px; border-radius: 999px; background: #fff; color: var(--navy-900); font-weight: 700; }
 .soon-panel .btn:hover { background: var(--orange); }
-.player { margin-bottom: 40px; }
-.player .frame { position: relative; aspect-ratio: 16 / 9; border-radius: 22px; overflow: hidden; background: #000; box-shadow: 0 30px 60px -30px rgba(5,21,48,.6); }
-.player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.player .now { margin: 20px 0 0; display: flex; flex-direction: column; gap: 6px; }
-.player .now .k { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--blue); }
-.player .now strong { font-size: clamp(19px, 2vw, 24px); letter-spacing: -.04em; }
-.vlist { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; list-style: none; margin: 0; padding: 0; }
-.vcard { width: 100%; border: 0; background: none; padding: 0; text-align: left; display: flex; flex-direction: column; gap: 6px; }
-.vcard .thumb { display: block; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #111; border: 2px solid transparent; transition: border-color .2s, transform .3s; }
+.soon-panel { margin-bottom: 28px; }
+.vnote { margin: 0 0 18px; font-size: 15px; font-weight: 600; color: var(--ink-3); }
+.vlist { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; list-style: none; margin: 0; padding: 0; }
+.vlist li.empty { aspect-ratio: 16 / 11; border-radius: 16px; border: 1.5px dashed #cdd3db; background: #f6f8fa; display: grid; place-items: center; font-size: 14px; color: var(--ink-3); }
+.vcard { width: 100%; height: 100%; border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 10px 10px 16px; text-align: left; display: flex; flex-direction: column; gap: 4px; transition: box-shadow .3s, transform .3s; }
+.vcard:hover { box-shadow: 0 24px 50px -24px rgba(10,33,72,.35); transform: translateY(-4px); }
+.vcard .thumb { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: #111; }
 .vcard .thumb img { width: 100%; height: 100%; object-fit: cover; }
-.vcard:hover .thumb { transform: translateY(-3px); }
-.vcard.on .thumb { border-color: var(--blue); }
-.vcard .k { margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--blue); }
-.vcard strong { font-size: 16px; letter-spacing: -.03em; line-height: 1.4; }
-.vcard small { font-size: 13px; color: var(--ink-3); }
-.vsoon { text-align: center; padding: 70px 24px; border-radius: 22px; background: #f4f7fb; }
-.vsoon .k { margin: 0; font-family: var(--font-en); font-size: 13px; font-weight: 700; letter-spacing: .16em; color: var(--orange); }
-.vsoon h2 { margin: 12px 0 0; font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.05em; }
-.vsoon p:not(.k) { margin: 14px auto 0; max-width: 560px; color: var(--ink-2); line-height: 1.8; }
-.vsoon .btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; height: 50px; padding: 0 24px; border-radius: 999px; background: var(--blue); color: #fff; font-weight: 700; }
-.vsoon .btn:hover { background: var(--orange); }
+.vcard .thumb::after { content: ""; position: absolute; left: 50%; top: 50%; width: 54px; height: 54px; translate: -50% -50%; border-radius: 50%; background: rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E") center / 26px no-repeat; }
+.vcard .k { margin: 10px 6px 0; font-size: 12px; font-weight: 700; color: var(--blue); }
+.vcard strong { margin: 0 6px; font-size: 16px; letter-spacing: -.03em; line-height: 1.4; }
+.vcard small { margin: 0 6px; font-size: 13px; color: var(--ink-3); }
+.vmodal .vbox { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: min(1100px, 100% - 40px); animation: rise .35s cubic-bezier(.2,.8,.2,1); }
+.vmodal .frame { position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: #000; box-shadow: 0 40px 80px -30px rgba(0,0,0,.8); }
+.vmodal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vmodal .sheet-x { top: -64px; right: 0; background: rgba(255,255,255,.15); }
+.vmodal .now { margin: 18px 0 0; display: flex; flex-direction: column; gap: 4px; color: #fff; }
+.vmodal .now .k { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--orange); }
+.vmodal .now strong { font-size: clamp(17px, 2vw, 22px); letter-spacing: -.04em; }
 .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; list-style: none; padding: 0; }
 .slots li { aspect-ratio: 16 / 9; border-radius: 16px; border: 1.5px dashed #cdd3db; display: grid; place-items: center; color: var(--ink-3); font-size: 14px; background: var(--paper-2); }
 
@@ -298,7 +296,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .soon-panel { grid-template-columns: 1fr; }
   .soon-panel .img { aspect-ratio: 16 / 10; }
   .soon-panel .txt { padding: 34px 26px 38px; }
-  .slots, .vlist { grid-template-columns: 1fr 1fr; }
+  .slots, .vlist { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .feature-book { grid-template-columns: 1fr; padding: 28px; gap: 26px; }
   .feature-book img { max-width: 360px; }
 }
@@ -326,8 +324,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .book h3 { font-size: 15px; margin-top: 18px; }
   .book .act { grid-template-columns: 1fr; }
   .book .act a { height: 40px; font-size: 13px; }
-  .slots, .vlist { grid-template-columns: 1fr; gap: 18px; }
-  .player .frame { border-radius: 14px; }
+  .slots, .vlist { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .vmodal .sheet-x { top: -56px; width: 44px; height: 44px; }
   .hd .home-btn { display: none; }
   .burger { margin-left: auto; }
   .ft .wrap { gap: 16px; }

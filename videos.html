@@ -65,19 +65,27 @@
           <button role="tab" type="button" aria-selected="false" data-cat="congrats">대국민 축하영상</button>
           <button role="tab" type="button" aria-selected="false" data-cat="sketch">50주년 행사스케치</button>
         </div>
-        <div class="player" id="v-player">
-          <div class="frame"><iframe id="v-frame" src="" title="영상 재생" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-          <p class="now"><span class="k" id="v-cat"></span><strong id="v-title"></strong></p>
+        <div class="soon-panel">
+          <div class="img" style="background-image:url(assets/img/main/card-3.jpg)" role="img" aria-label="영상으로 보는 KERI 50년"></div>
+          <div class="txt">
+            <p class="k">KERI 50 YEARS IN VIDEO</p>
+            <h2>영상으로 보는 KERI 50년</h2>
+            <p>한국전기연구원이 걸어온 50년의 발자취와 새로운 미래를 향한 비전, 국민과 함께하는 축하의 순간들을 영상에 담았습니다. KERI의 빛나는 역사와 뜻깊은 50주년의 순간들을 만나보세요.</p>
+          </div>
         </div>
+        <p class="vnote" id="v-soon" hidden></p>
         <ul class="vlist" id="v-list" aria-label="영상 목록"></ul>
-        <div class="vsoon" id="v-soon" hidden>
-          <p class="k">COMING SOON</p>
-          <h2 id="v-soon-title">영상 준비 중입니다</h2>
-          <p>행사 후 순차적으로 올라갑니다. 그동안 KERI 홈페이지 홍보관에서 더 많은 영상을 보실 수 있습니다.</p>
-          <a class="btn" href="https://www.keri.re.kr/kor/contents/about-05-02-01.do?gotoMenuNo=about-05-02" target="_blank" rel="noopener">KERI 홍보 영상관 바로가기<span class="sr-only"> (새 창)</span> <span aria-hidden="true">→</span></a>
-        </div>
       </div>
     </section>
+
+    <div class="modal vmodal" id="v-modal">
+      <div class="dim"></div>
+      <div class="vbox" role="dialog" aria-modal="true" aria-labelledby="v-title">
+        <button class="sheet-x" type="button" aria-label="닫기"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+        <div class="frame"><iframe id="v-frame" src="" title="영상 재생" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+        <p class="now"><span class="k" id="v-cat"></span><strong id="v-title"></strong></p>
+      </div>
+    </div>
   </main>
 
   <footer class="ft">
