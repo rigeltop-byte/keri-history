@@ -41,7 +41,7 @@
     <ol>
       <li><a href="greeting.html"><strong>인사말</strong><span>50th Anniversary Message</span></a></li>
       <li><a href="keywords.html"><strong>키워드로 보는 KERI 50년</strong><span>KERI 50 Years in Keywords</span></a></li>
-      <li><a href="videos.html"><strong>영상으로 보는 KERI 50년<span class="soon">준비 중</span></strong><span>KERI 50 Years in Video</span></a></li>
+      <li><a href="videos.html"><strong>영상으로 보는 KERI 50년</strong><span>KERI 50 Years in Video</span></a></li>
       <li><a href="books.html"><strong>역사서 바로보기</strong><span>KERI History Books</span></a></li>
       <li><a href="hall360.html"><strong>360° 역사관<span class="soon">12월 공개</span></strong><span>KERI History Hall 360°</span></a></li>
     </ol>
@@ -59,24 +59,23 @@
 
     <section class="sec">
       <div class="wrap">
-        <div class="tabs" role="tablist" aria-label="영상 분류">
-          <button role="tab" type="button" aria-selected="true">전체</button>
-          <button role="tab" type="button" aria-selected="false">50주년 기념영상</button>
-          <button role="tab" type="button" aria-selected="false">대국민 축하영상</button>
-          <button role="tab" type="button" aria-selected="false">50주년 행사스케치</button>
+        <div class="tabs" role="tablist" aria-label="영상 분류" id="v-tabs">
+          <button role="tab" type="button" aria-selected="true" data-cat="">전체</button>
+          <button role="tab" type="button" aria-selected="false" data-cat="anniv">50주년 기념영상</button>
+          <button role="tab" type="button" aria-selected="false" data-cat="congrats">대국민 축하영상</button>
+          <button role="tab" type="button" aria-selected="false" data-cat="sketch">50주년 행사스케치</button>
         </div>
-        <div class="soon-panel">
-          <div class="img" style="background-image:url(assets/img/main/card-3.jpg)" role="img" aria-label="영상으로 보는 KERI 50년"></div>
-          <div class="txt">
-            <p class="k">COMING SOON</p>
-            <h2>영상으로 보는 KERI 50년<br>준비 중입니다</h2>
-            <p>창립 50주년 기념 영상과 KERI의 연구 현장을 담은 영상을 이곳에서 만나실 수 있도록 준비하고 있습니다. 그동안 KERI 홈페이지 홍보관에서 영상을 보실 수 있습니다.</p>
-            <a class="btn" href="https://www.keri.re.kr/kor/contents/about-05-02-01.do?gotoMenuNo=about-05-02" target="_blank" rel="noopener">KERI 홍보 영상관 바로가기<span class="sr-only"> (새 창)</span> <span aria-hidden="true">→</span></a>
-          </div>
+        <div class="player" id="v-player">
+          <div class="frame"><iframe id="v-frame" src="" title="영상 재생" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+          <p class="now"><span class="k" id="v-cat"></span><strong id="v-title"></strong></p>
         </div>
-        <ul class="slots" aria-label="영상 자리 (준비 중)">
-          <li>영상 준비 중</li><li>영상 준비 중</li><li>영상 준비 중</li>
-        </ul>
+        <ul class="vlist" id="v-list" aria-label="영상 목록"></ul>
+        <div class="vsoon" id="v-soon" hidden>
+          <p class="k">COMING SOON</p>
+          <h2 id="v-soon-title">영상 준비 중입니다</h2>
+          <p>행사 후 순차적으로 올라갑니다. 그동안 KERI 홈페이지 홍보관에서 더 많은 영상을 보실 수 있습니다.</p>
+          <a class="btn" href="https://www.keri.re.kr/kor/contents/about-05-02-01.do?gotoMenuNo=about-05-02" target="_blank" rel="noopener">KERI 홍보 영상관 바로가기<span class="sr-only"> (새 창)</span> <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
   </main>
@@ -87,6 +86,7 @@
       <p>경상남도 창원시 성산구 전기의길 12 (성주동) 한국전기연구원<br>© 2026 KERI. All rights reserved.</p>
     </div>
   </footer>
+  <script src="assets/js/videos.js"></script>
   <script src="assets/js/site.js"></script>
 </body>
 </html>

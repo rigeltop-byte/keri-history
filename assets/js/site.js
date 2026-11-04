@@ -154,13 +154,40 @@
     if (m) open(+m[1]);
   }
 
-  /* ── 탭 (영상) ── */
-  $$(".tabs").forEach(function (tabs) {
-    tabs.addEventListener("click", function (e) {
-      var b = e.target.closest("[role='tab']"); if (!b) return;
-      $$("[role='tab']", tabs).forEach(function (t) { t.setAttribute("aria-selected", t === b); });
+  /* ── 영상: 탭으로 분류, 카드 누르면 위 플레이어에서 재생 (목록은 assets/js/videos.js) ── */
+  var vlist = $("#v-list");
+  if (vlist && window.KERI_VIDEOS) {
+    var V = window.KERI_VIDEOS, CAT = { anniv: "50주년 기념영상", congrats: "대국민 축하영상", sketch: "50주년 행사스케치" }, vcur = "";
+    function play(v, auto) {
+      vcur = v.id;
+      $("#v-frame").src = "https://www.youtube-nocookie.com/embed/" + v.id + "?rel=0" + (auto ? "&autoplay=1" : "");
+      $("#v-cat").textContent = CAT[v.cat] || "";
+      $("#v-title").textContent = v.title;
+      $$(".vcard", vlist).forEach(function (c) { c.classList.toggle("on", c.dataset.id === v.id); });
+    }
+    function renderV(cat) {
+      var list = V.filter(function (v) { return !cat || v.cat === cat; });
+      $("#v-player").hidden = !list.length;
+      $("#v-soon").hidden = !!list.length;
+      if (!list.length) $("#v-soon-title").textContent = (CAT[cat] || "영상") + "은 준비 중입니다";
+      vlist.innerHTML = list.map(function (v) {
+        return '<li><button class="vcard" type="button" data-id="' + v.id + '"><span class="thumb"><img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy"></span>' +
+          '<span class="k">' + (CAT[v.cat] || "") + '</span><strong>' + esc(v.title) + "</strong><small>" + esc(v.date || "") + "</small></button></li>";
+      }).join("");
+      if (list.length) play(list.filter(function (v) { return v.id === vcur; })[0] || list[0], false);
+    }
+    vlist.addEventListener("click", function (e) {
+      var b = e.target.closest(".vcard"); if (!b) return;
+      play(V.filter(function (v) { return v.id === b.dataset.id; })[0], true);
+      $("#v-player").scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  });
+    $("#v-tabs").addEventListener("click", function (e) {
+      var b = e.target.closest("[role='tab']"); if (!b) return;
+      $$("[role='tab']", $("#v-tabs")).forEach(function (t) { t.setAttribute("aria-selected", t === b); });
+      renderV(b.dataset.cat);
+    });
+    renderV("");
+  }
 })();
 
 /* 검토용 배포본: PDF를 올리지 않은 경우 안내 (deploy.py가 data-pending을 붙인다) */
