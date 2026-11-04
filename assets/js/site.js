@@ -160,15 +160,28 @@
     var V = window.KERI_VIDEOS, CAT = { anniv: "50주년 기념영상", congrats: "대국민 축하영상", sketch: "50주년 행사스케치" };
     var vmodal = $("#v-modal"), vlast = null;
     function renderV(cat) {
+      // 전체 탭 = 배너 + 카드 목록 / 개별 탭 = 영상이 있으면 제목 + 영상 크게, 없으면 COMING SOON 안내 (전기연 1104 탭별 구성)
       var list = V.filter(function (v) { return !cat || v.cat === cat; });
-      $("#v-soon").hidden = !!list.length;
-      if (!list.length) $("#v-soon").textContent = (CAT[cat] || "") + " 영상은 준비 중입니다";
-      var html = list.map(function (v) {
-        return '<li><button class="vcard" type="button" data-id="' + v.id + '"><span class="thumb"><img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy"></span>' +
-          '<span class="k">' + (CAT[v.cat] || "") + '</span><strong>' + esc(v.title) + "</strong><small>" + esc(v.date || "") + "</small></button></li>";
-      });
-      while (html.length < 3 || html.length % 3) html.push('<li class="empty">영상 준비 중</li>');
-      vlist.innerHTML = html.join("");
+      $("#v-all").hidden = !!cat;
+      $("#v-plays").hidden = !cat || !list.length;
+      $("#v-soon").hidden = !cat || !!list.length;
+      if (!cat) {
+        var html = list.map(function (v) {
+          return '<li><button class="vcard" type="button" data-id="' + v.id + '"><span class="thumb"><img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy"></span>' +
+            '<span class="k">' + (CAT[v.cat] || "") + '</span><strong>' + esc(v.title) + "</strong><small>" + esc(v.date || "") + "</small></button></li>";
+        });
+        while (html.length < 3 || html.length % 3) html.push('<li class="empty">영상 준비 중</li>');
+        vlist.innerHTML = html.join("");
+      } else if (list.length) {
+        $("#v-plays").innerHTML = list.map(function (v) {
+          return '<article class="vplay"><h2>' + esc(v.title) + "</h2>" +
+            '<div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + v.id + '?rel=0" title="' + esc(v.title) + '" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe></div>' +
+            (v.date ? "<small>" + esc(v.date) + "</small>" : "") + "</article>";
+        }).join("");
+      } else {
+        $("#v-plays").innerHTML = "";
+        $("#v-soon-title").textContent = (CAT[cat] || "") + " 영상은 준비 중입니다";
+      }
     }
     function openV(v) {
       $("#v-frame").src = "https://www.youtube-nocookie.com/embed/" + v.id + "?rel=0&autoplay=1";

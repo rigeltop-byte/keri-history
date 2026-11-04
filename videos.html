@@ -65,16 +65,30 @@
           <button role="tab" type="button" aria-selected="false" data-cat="congrats">대국민 축하영상</button>
           <button role="tab" type="button" aria-selected="false" data-cat="sketch">50주년 행사스케치</button>
         </div>
-        <div class="soon-panel">
-          <div class="img" style="background-image:url(assets/img/main/card-3.jpg)" role="img" aria-label="영상으로 보는 KERI 50년"></div>
-          <div class="txt">
-            <p class="k">KERI 50 YEARS IN VIDEO</p>
-            <h2>영상으로 보는 KERI 50년</h2>
-            <p>한국전기연구원이 걸어온 50년의 발자취와 새로운 미래를 향한 비전, 국민과 함께하는 축하의 순간들을 영상에 담았습니다. KERI의 빛나는 역사와 뜻깊은 50주년의 순간들을 만나보세요.</p>
+
+        <!-- 전체 탭: 대표 배너 + 영상 카드 목록 -->
+        <div id="v-all">
+          <div class="soon-panel">
+            <div class="img" style="background-image:url(assets/img/main/card-3.jpg)" role="img" aria-label="영상으로 보는 KERI 50년"></div>
+            <div class="txt">
+              <p class="k">KERI 50 YEARS IN VIDEO</p>
+              <h2>영상으로 보는 KERI 50년</h2>
+              <p>한국전기연구원이 걸어온 50년의 발자취와 새로운 미래를 향한 비전, 국민과 함께하는 축하의 순간들을 영상에 담았습니다. KERI의 빛나는 역사와 뜻깊은 50주년의 순간들을 만나보세요.</p>
+            </div>
           </div>
+          <ul class="vlist" id="v-list" aria-label="영상 목록"></ul>
         </div>
-        <p class="vnote" id="v-soon" hidden></p>
-        <ul class="vlist" id="v-list" aria-label="영상 목록"></ul>
+
+        <!-- 개별 탭 (영상 있음): 제목 + 영상 크게 -->
+        <div class="vplays" id="v-plays" hidden></div>
+
+        <!-- 개별 탭 (영상 없음): COMING SOON 안내 -->
+        <div class="vsoon" id="v-soon" hidden>
+          <p class="k">COMING SOON</p>
+          <h2 id="v-soon-title">영상은 준비 중입니다</h2>
+          <p>행사 후 순차적으로 올라갑니다. 그동안 KERI 홈페이지 홍보관에서 더 많은 영상을 보실 수 있습니다.</p>
+          <a class="btn" href="https://www.keri.re.kr/kor/contents/about-05-02-01.do?gotoMenuNo=about-05-02" target="_blank" rel="noopener">KERI 홍보 영상관 바로가기<span class="sr-only"> (새 창)</span> <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
