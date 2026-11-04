@@ -237,7 +237,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .note { margin-top: 26px; font-size: 13px; color: var(--ink-3); text-align: center; }
 
 /* ───────── 준비 중 (영상·360°) ───────── */
-.tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 40px; overflow-x: auto; }
+.tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 40px; }
 .tabs button { border: 0; background: none; padding: 14px 20px; font-size: 16px; font-weight: 600; color: var(--ink-3); border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; }
 .tabs button[aria-selected="true"] { color: var(--blue); border-color: var(--blue); }
 .soon-panel { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: 28px; overflow: hidden; background: var(--navy-900); color: #fff; min-height: 460px; }
@@ -325,6 +325,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .book .act { grid-template-columns: 1fr; }
   .book .act a { height: 40px; font-size: 13px; }
   .slots, .vlist { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  /* 휴대폰에서만 탭을 옆으로 밀어 보고, 스크롤 막대는 숨긴다 (윈도 PC에서 막대가 보이던 문제, 전기연 1104) */
+  .tabs { overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
   .vmodal .sheet-x { top: -56px; width: 44px; height: 44px; }
   .hd .home-btn { display: none; }
   .burger { margin-left: auto; }
