@@ -168,13 +168,13 @@
       if (!cat) {
         var html = list.map(function (v) {
           return '<li><button class="vcard" type="button" data-id="' + v.id + '"><span class="thumb"><img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy"></span>' +
-            '<span class="k">' + (CAT[v.cat] || "") + '</span><strong>' + esc(v.title) + "</strong><small>" + esc(v.date || "") + "</small></button></li>";
+            '<span class="k">' + (CAT[v.cat] || "") + (v.award ? " · <b>" + esc(v.award) + "</b>" : "") + '</span><strong>' + esc(v.title) + "</strong><small>" + esc(v.date || "") + "</small></button></li>";
         });
         while (html.length < 3 || html.length % 3) html.push('<li class="empty">영상 준비 중</li>');
         vlist.innerHTML = html.join("");
       } else if (list.length) {
         $("#v-plays").innerHTML = list.map(function (v) {
-          return '<article class="vplay"><h2>' + esc(v.title) + "</h2>" +
+          return '<article class="vplay">' + (v.award ? '<p class="award">' + esc(v.award) + "</p>" : "") + "<h2>" + esc(v.title) + "</h2>" +
             '<div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + v.id + '?rel=0" title="' + esc(v.title) + '" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe></div>' +
             (v.date ? "<small>" + esc(v.date) + "</small>" : "") + "</article>";
         }).join("");
