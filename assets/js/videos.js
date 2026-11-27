@@ -8,6 +8,6 @@ window.KERI_VIDEOS = [
   { id: "9wlEKZXeAQo", cat: "congrats", award: "대상", title: "KERI, 빛나는 50년을 쓰다" },
   { id: "YWD7p4MyRXI", cat: "congrats", award: "최우수상", title: "빛으로 채운 50년" },
   { id: "3sBpfNIavx4", cat: "congrats", award: "최우수상", title: "50주년 축하송" },
-  { id: "lKb4hShG2hE", cat: "congrats", award: "우수상", title: "한국전기연구원과 함께 50년의 혁신을 밝은 빛으로 그려갑니다" },
+  { id: "lKb4hShG2hE", cat: "congrats", award: "우수상", title: "한국전기연구원과 함께 50년의 헌신을 밝은 빛으로 그려갑니다" },
   { id: "Omb8c-luFo0", cat: "congrats", award: "우수상", title: "전력(電力) 질주, 세상을 바꾼 50년의 불빛" }
 ];
